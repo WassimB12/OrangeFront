@@ -1,0 +1,27 @@
+table {
+  margin-top: 20px; /* Space above the table */
+  margin-bottom: 20px; /* Space below the table */
+  margin-left: 20px; /* Space to the left of the table */
+  margin-right: 20px;  border-collapse: collapse;
+
+}
+
+/* Apply scrollable overflow */
+table tbody {
+  overflow-y: auto;
+}
+
+/* Just for demonstration, styling table cells */
+
+
+th {
+  background-color: #262525;
+  color: #676666;
+}
+body
+{ /* background-image: url('../images/12.jpg');*/
+  background-size: cover;
+  background-repeat: no-repeat;
+background-attachment: fixed;
+}
+
