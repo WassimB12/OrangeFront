@@ -9,6 +9,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MailComponent } from './mail/mail.component';
 import { RouterModule } from '@angular/router';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { RouterModule } from '@angular/router';
   ],  exports: [ReactiveFormsModule,FormsModule,RouterModule]
 ,
   providers: [
-    provideClientHydration(),provideHttpClient(withFetch())
+    provideClientHydration(),provideHttpClient(withFetch()), provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

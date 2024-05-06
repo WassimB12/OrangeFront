@@ -67,10 +67,10 @@
 
 
 </head>
-<body><div class="contact-container">
+<body><div class="contact-container" >
   <div class="left-col">
   </div>
-  <div class="right-col">
+  <div class="right-col" *ngIf="div1">
     <div class="theme-switch-wrapper">
     <label class="theme-switch" for="checkbox">
         <input type="checkbox" id="checkbox" />
@@ -92,11 +92,12 @@
       <input type="text" class="email"  name="mail2" formControlName="mail2">
       <br/>
       <label for="name">First date</label>
-
-      <input type="text" class="email"  name="date" formControlName="date" >
+      <input type="datetime-local" class="email" id="date" name="date" formControlName="date" value="2024-04-16T12:00" required >
+<br>
       <label for="name">Second date</label>
+      <input type="datetime-local"   name="date2" formControlName="date2" value="2015-01-02T11:42:13.510" required>
 
-      <input type="text" class="email"  name="date2" formControlName="date2" >
+
 
       <br/>
       <button type="button" (click)="formSubmit()">SUBMIT</button>
@@ -104,6 +105,100 @@
 <div id="error"></div>
 <div id="success-msg"></div>
   </div>
+
+  <!--Log details section -->
+
+
+  <div class="right-col" *ngIf="div2">
+    <div class="theme-switch-wrapper">
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox" />
+        <div class="slider round"></div>
+  </label>
+  <div class="description">Dark Mode</div>
+</div>
+
+    <h1> Log Details </h1>
+<p>Retrieves logs of emails sent by a specific sender to either a particular receiver or multiple receivers within a specified time range. </p>
+    <form [formGroup]="logForm" ><br>
+      <label for="name">Log ID</label>
+
+      <input type="text" class="email"  name="id" formControlName="id" required>
+      <br/>
+
+
+      <br/>
+      <button type="submit"   (click)="getLog(this.logForm.value.id)" (click)="open(mymodal)">SUBMIT</button>
+    <br>
+
+
+    <ng-template #mymodal let-modal style="width:fit-content">
+      <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Log details</h4>
+
+      </div>
+      <div>
+        <form>
+          <div class="modal-body" style=" display: flex;
+          flex-direction: row;margin-top: 5px;padding-bottom: 5vh;padding-top: 4vh; text-align: center;">
+
+              <div class="row"  style="flex: 1;
+              padding-right: 30px;">
+<textarea readonly>&nbsp;
+  {{this.logString}}
+
+</textarea></div>
+
+
+          </div>
+
+          <div class="modal-footer">
+
+              <button type="button" class="btn btn-outline-secondary"
+                  (click)="modal.close('Save click')" (click)="cancel()">Close</button>
+          </div>
+      </form>
+  </div>
+  </ng-template></form>
+<div id="error"></div>
+<div id="success-msg"></div>
+  </div>
+
+
+<!--  div3-->
+
+<div class="right-col" *ngIf="div3">
+  <div class="theme-switch-wrapper">
+  <label class="theme-switch" for="checkbox">
+      <input type="checkbox" id="checkbox" />
+      <div class="slider round"></div>
+</label>
+<div class="description">Dark Mode</div>
+</div>
+
+  <h1> Receiver Rapport </h1>
+<p>Retrieves logs of emails sent to a specific receiver from either a particular sender or multiple senders within a specified time range. </p>
+  <form [formGroup]="emailForm2" >
+
+    <label for="name">Receiver Email</label>
+
+
+    <input type="text" class="email"  name="mail2" formControlName="mail2">
+    <br/>
+    <label for="name">First date</label>
+    <input type="datetime-local"    name="date" formControlName="date"  required>
+
+   <!-- <input type="text" class="email"  name="date" formControlName="date" >-->
+    <label for="name">Second date</label>
+
+    <input type="datetime-local" class="email"  name="date2" formControlName="date2"  required>
+
+    <br/>
+    <button type="button" (click)="formSubmit()">SUBMIT</button>
+  <br></form>
+<div id="error"></div>
+<div id="success-msg"></div>
+</div>
 </div>
 
 </body>

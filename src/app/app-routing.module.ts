@@ -9,7 +9,7 @@ import { TableDisplayComponent } from './table-display/table-display.component';
 
 export const routes: Routes = [
   {
-      path: 'mail',
+      path: 'mail/:id',
       component: MailComponent
   },
   {

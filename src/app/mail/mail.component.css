@@ -41,6 +41,28 @@ body {
   width: 10rem;
   padding: 1.5rem;
 }
+.input-container input {
+  border: none;
+  box-sizing: border-box;
+  outline: 0;
+  position: relative;
+  width: 100%;
+  cursor: pointer !important; /* Add cursor pointer */
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
 
 .right-col {
   background: var(--bg-color);
@@ -84,9 +106,15 @@ label, .description {
   padding: 1rem 0;
 }
 
-input, textarea, label {
+input, label {
   width: 40vw;
   display: block;
+}
+textarea{
+  
+  width: 30vw;
+  display: flex;
+    height:30vw;
 }
 
 p, placeholder, input, textarea {
@@ -97,7 +125,7 @@ p, placeholder, input, textarea {
   color: var(--primary-color);
 }
 
-input, textarea {
+input {
   color: var(--primary-color);
   font-weight: 500;
   background: var(--bg-color);
@@ -124,8 +152,11 @@ button {
   outline: none;
   cursor: pointer;
 }
+textarea:not(:hover) {
+  opacity: 0.5;
+}
 
-input:hover, textarea:hover, button:hover {
+input:hover,  button:hover {
   opacity: 0.5;
 }
 &:hover,
@@ -302,4 +333,10 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+
+
+
+
 }
+
+

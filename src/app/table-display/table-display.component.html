@@ -1,31 +1,58 @@
-<body><div class="row">
-  <div class="card" class="text-center">
-      <table class="table table-hover">
-          <thead >
-<th>ID</th>
-            <th>Sender mail</th>
-              <th>Receiver mail</th>
-              <th>Result</th>
-              <th>Fes</th>
-              <th>Couloir</th>
 
-          </thead>
-          <tbody>
-              <tr *ngFor='let m of listMails'>
-                <td>{{m.id}}</td>
+  <table class="container">
+      <thead>
+        <tr>
+          <th>ID</th>
+              <th>Sender mail</th>
+                <th>Receiver mail</th>
+                <th>Result</th>
+                <th>Fes</th>
+                <th>Couloir</th>
+                <th>Log details</th>
+        </tr>
+      </thead>
+      <tbody> <tr *ngFor='let m of listMails'>
+        <td>{{m.id}}</td>
+          <td>{{m.sender}}</td>
+          <td>{{m.receiver}}</td>
+          <td>{{m.result}}</td>
+          <td>{{m.fes}}</td>
+          <td>{{m.couloir}}</td>
+          <td>      <button type="submit"   (click)="getLog(m.id)" (click)="open(mymodal)">open</button>
+          </td>
 
-                  <td>{{m.sender}}</td>
-                  <td>{{m.receiver}}</td>
-                  <td>{{m.result}}</td>
-                  <td>{{m.fes}}</td>
-                  <td>{{m.couloir}}</td>
 
+        </tr>
 
-                </tr>
-              </tbody>
-          </table>
+      </tbody>
+    </table>
+    <ng-template #mymodal let-modal style="width:fit-content">
+      <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Log details</h4>
+
       </div>
+      <div>
+        <form>
+          <div class="modal-body" style=" display: flex;
+          flex-direction: row;margin-top: 5px;padding-bottom: 5vh;padding-top: 4vh; text-align: center;">
+
+              <div class="row"  style="flex: 1;
+              padding-right: 30px;">
+<textarea readonly>
+  {{this.logString}}
+
+</textarea></div>
+
+
+          </div>
+
+          <div class="modal-footer">
+
+              <button type="button" class="btn btn-outline-secondary"
+                  (click)="modal.close('Save click')" (click)="cancel()">Close</button>
+          </div>
+      </form>
   </div>
-</body>
+  </ng-template>
 
 
