@@ -1,14 +1,86 @@
 
-  <table class="container">
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Sidebar 01</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../../assets/css/style.css">
+
+  </head>
+  <body>
+<div class="wrapper d-flex align-items-stretch">
+
+  <nav id="sidebar"  >
+    <div class="p-4 pt-5">
+      <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(assets/images/5.png);"></a>
+      <ul class="list-unstyled components mb-5">
+        <li class="active">
+          <a href="#"data-toggle="collapse" aria-expanded="false" style="color: inherit; text-decoration: none;" onmouseover="this.style.color='orange'"
+          onmouseout="this.style.color='inherit'" class="dropdown-toggle"   [routerLink]="['/home']">Home</a>
+          <ul class="collapse list-unstyled" id="homeSubmenu">
+            <li>
+                <a href="#">Home 1</a>
+            </li>
+            <li>
+                <a href="#">Home 2</a>
+            </li>
+            <li>
+                <a href="#">Home 3</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+            <a href="#">About</a>
+        </li>
+        <li>
+          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+            <li>
+                <a href="#">Page 1</a>
+            </li>
+            <li>
+                <a href="#">Page 2</a>
+            </li>
+            <li>
+                <a href="#">Page 3</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Portfolio</a>
+        </li>
+        <li>
+          <a href="#">Contact</a>
+        </li>
+      </ul>
+
+      <div class="footer">
+        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+      </div>
+
+    </div>
+  </nav>
+  <table class="container" style=" margin-right: 0;
+  margin-left: 0;  max-width: none;
+">
       <thead>
-        <tr>
+        <tr style="color:rgb(51, 50, 50)">
           <th>ID</th>
               <th>Sender mail</th>
                 <th>Receiver mail</th>
                 <th>Result</th>
                 <th>Fes</th>
+
                 <th>Couloir</th>
                 <th>Log details</th>
+                <th>Couloir details</th>
         </tr>
       </thead>
       <tbody> <tr *ngFor='let m of listMails'>
@@ -17,42 +89,63 @@
           <td>{{m.receiver}}</td>
           <td>{{m.result}}</td>
           <td>{{m.fes}}</td>
-          <td>{{m.couloir}}</td>
-          <td>      <button type="submit"   (click)="getLog(m.id)" (click)="open(mymodal)">open</button>
-          </td>
 
+          <td>  <!-- <ng-container *ngIf="m.result === 'Delivered'">
+            <ng-container *ngIf="!m.showDetails">
+           <button
+           (click)="getCouloir(m,m.ipadress, m.couloirID, m.date);" >Check</button>
+          </ng-container>
+          <ng-container *ngIf="m.showDetails" >
+          <p >  {{m.couloir}}</p>
+              </ng-container>
+          </ng-container>-->  {{m.couloir}}
+          </td>
+          <td>      <button type="submit"   (click)="getLog(m.id,1,55)" (click)="open(mymodal)">open</button>
+          </td>
+          <td>
+            <button (click)="getLog(m.couloirID, 2, m.ipadress); open(mymodal)">open</button>
+          </td>
 
         </tr>
 
       </tbody>
     </table>
-    <ng-template #mymodal let-modal style="width:fit-content">
-      <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Log details</h4>
 
+    <ng-template #mymodal let-modal>
+      <div class="modal-dialog" style="max-width: 60vw;">
+        <div class="modal-content" style="max-width: 60vw;">
+          <div class="modal-header"style="max-width: 60vw;">
+            <h4 class="modal-title" id="modal-basic-title">Log details</h4>
+          </div>
+          <div class="modal-body" style="max-width: 60vw;">
+            <form>
+              <div style="display: flex; flex-direction: row; padding-bottom: 1vh; padding-top: 0vh; text-align: center;max-width: 60vw;">
+                <div class="row" style="flex: 1;">
+                  <textarea readonly>{{this.logString}}</textarea>
+                </div>
+              </div>
+              <div class="modal-footer" style="max-width: 60vw;">
+                <button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')" (click)="cancel()">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-      <div>
-        <form>
-          <div class="modal-body" style=" display: flex;
-          flex-direction: row;margin-top: 5px;padding-bottom: 5vh;padding-top: 4vh; text-align: center;">
-
-              <div class="row"  style="flex: 1;
-              padding-right: 30px;">
-<textarea readonly>
-  {{this.logString}}
-
-</textarea></div>
+    </ng-template>
 
 
-          </div>
-
-          <div class="modal-footer">
-
-              <button type="button" class="btn btn-outline-secondary"
-                  (click)="modal.close('Save click')" (click)="cancel()">Close</button>
-          </div>
-      </form>
   </div>
-  </ng-template>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/popper.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <div *ngIf="loading" class="loading-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+
+</body>
+</html>
+
 
 

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { TableDisplayComponent } from './table-display/table-display.component';
+import { ChartsWorkComponent } from './chartsWork/charts-work.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,9 @@ export const routes: Routes = [
 },{
   path: 'display',
   component: TableDisplayComponent
+},{
+  path: 'charts',
+  component: ChartsWorkComponent
 },
 
   {

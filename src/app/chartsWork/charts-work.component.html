@@ -1,0 +1,80 @@
+<body><div class="contact-container" >
+  <div class="left-col">
+  </div>
+<div class="right-col" *ngIf="div1" >
+  <div class="theme-switch-wrapper">
+  <label class="theme-switch" for="checkbox">
+      <input type="checkbox" id="checkbox" />
+      <div class="slider round"></div>
+</label>
+<div class="description">Dark Mode</div>
+</div>
+
+  <h1> Domain rapport </h1>
+<p>Retrieves logs of emails sent by a specific sender to either a particular receiver or multiple receivers within a specified time range. </p>
+  <form [formGroup]="domainForm" ><br>
+    <label for="name">Domain name</label>
+
+    <input type="text" class="email"  name="domain" formControlName="domain"  required>
+    <br/>
+
+
+    <br/>
+    <button type="button" (click)="this.loading=true;getMails(this.domainForm.value.domain, 'all', '2024-02-13T00:03', '2024-02-13T14:03');open(mymodal)">SUBMIT</button>
+  <br>
+
+
+
+       </form>
+<div id="error"></div>
+<div id="success-msg"></div>
+</div>
+<ng-template #mymodal let-modal style="width:fit-content">
+  <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Domain rapport</h4>
+
+  </div>
+
+
+  <div  >
+    <form>
+      <div class="modal-body" style=" display: flex;
+      flex-direction: row;margin-top: 5px;padding-bottom: 5vh;padding-top: 4vh; text-align: center;">
+
+          <div class="row"  style="flex: 1;
+          padding-right: 5px;">
+<div id="GFG"  >
+  <h2 style="font-family: 'Jost' ,'sans-serif';
+  font-weight: 540;
+  letter-spacing: 0.07rem;"> Mail transmission result for the past 30 days : </h2>
+
+	<h1 style="color:green;font-family: 'Jost';">{{this.domainForm.value.domain}}</h1>
+  <div *ngIf="loading" style="margin-left: 150px; margin-top: 70px; ">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div style="width:85%;" *ngIf="!loading">
+		<p-chart type="pie"
+				[data]="data"
+				[options]="chartOptions"
+				[style]="{'width': '90%'}">
+		</p-chart>
+
+	</div>
+
+
+</div></div>
+
+
+</div>
+
+<div class="modal-footer">
+
+    <button type="button" class="btn btn-outline-secondary"
+        (click)="modal.close('Save click')" (click)="cancel()">Close</button>
+</div>
+</form>
+</div>
+</ng-template></div>
+
+</body>

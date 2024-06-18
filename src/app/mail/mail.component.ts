@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Email } from '../Entities/email';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import{EmailService} from '../Services/email-service.service';
-import { FormBuilder, FormGroup, FormsModule, Validators,FormControl,ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators,FormControl,ReactiveFormsModule, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
@@ -42,21 +42,21 @@ constructor(private formBuilder: FormBuilder,private router: Router,private mail
 
 
 {  this.emailForm = this.formBuilder.group({
-  mail1: ['habib'],
+  mail1: [''],
   mail2: ['all'],
   date: ['2024-02-13T10:30'],
   date2: ['2024-02-13T19:30']
 });
 
 this.emailForm2 = this.formBuilder.group({
-  mail1: [''],
+  mail1: ['form2^^'],
   mail2: [''],
-  date: [''],
-  date2: ['']
+  date: ['2024-03-11T10:30'],
+  date2: ['2024-03-11T19:30']
 });
 this.logForm = this.formBuilder.group({
   id: [''],
-
+  options: this.formBuilder.array([false, false, false, false])
 });}
 
 ngOnInit(): void {
@@ -140,10 +140,30 @@ open(content: any) {
   cancel(){
     this.form = false;
   }
-  getLog(id:any){
+  getLog(id:any,op:any,ip:any){
     /*if this.logForm.value.id == null -> error message (id required)*/
-    this.mailService.getLog(id).subscribe(res => this.logString = res)}
+    this.mailService.getLog(id,op,ip).subscribe(res => this.logString = res)}
+/* to be continued so it can review couloir log also  */
 
+onCheckboxChange(index: number): void {
+  const checkboxes = this.logForm.get('options') as FormArray;
+  checkboxes.controls.forEach((control, i) => {
+    if (i !== index) {
+      control.setValue(false, { emitEvent: false });
+    }
+  });
+}
 
-
+submitForm(): void {
+  const { id, options } = this.logForm.value;
+  if (options[0]) {
+    this.getLog(id, 1, '55');
+  } else if (options[1]) {
+    this.getLog(id, 2, '10.46.96.20');
+  } else if (options[2]) {
+    this.getLog(id, 2, '10.46.96.21');
+  } else if (options[3]) {
+    this.getLog(id, 2, '10.46.96.22');
+  }
+}
 }

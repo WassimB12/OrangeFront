@@ -84,7 +84,7 @@
     <form [formGroup]="emailForm" >
       <label for="name">Sender Email</label>
 
-      <input type="text" class="email"  name="mail1" formControlName="mail1">
+      <input type="text" class="email" id="mail1" name="mail1" formControlName="mail1"  autocomplete="on">
       <br/>
       <label for="name">Receiver Email</label>
 
@@ -92,10 +92,10 @@
       <input type="text" class="email"  name="mail2" formControlName="mail2">
       <br/>
       <label for="name">First date</label>
-      <input type="datetime-local" class="email" id="date" name="date" formControlName="date" value="2024-04-16T12:00" required >
+      <input type="datetime-local" class="email" id="date" name="date" formControlName="date"  required >
 <br>
       <label for="name">Second date</label>
-      <input type="datetime-local"   name="date2" formControlName="date2" value="2015-01-02T11:42:13.510" required>
+      <input type="datetime-local"   name="date2" formControlName="date2"  required>
 
 
 
@@ -120,15 +120,25 @@
 
     <h1> Log Details </h1>
 <p>Retrieves logs of emails sent by a specific sender to either a particular receiver or multiple receivers within a specified time range. </p>
-    <form [formGroup]="logForm" ><br>
-      <label for="name">Log ID</label>
+<form [formGroup]="logForm" (ngSubmit)="submitForm()">
+  <label for="name">Log ID</label>
+  <input type="text" class="email" name="id" formControlName="id" required>
+  <br/>
+  <div formArrayName="options">
 
-      <input type="text" class="email"  name="id" formControlName="id" required>
-      <br/>
+  <label for="FES"> FES </label>
+  <input type="checkbox" id="FES" [formControlName]="0" (change)="onCheckboxChange(0)">
+  <label for="VIP"> VIP </label>
+  <input type="checkbox" id="VIP" [formControlName]="1" (change)="onCheckboxChange(1)">
+  <label for="GP"> GP </label>
+  <input type="checkbox" id="GP" [formControlName]="2" (change)="onCheckboxChange(2)">
+  <label for="ML"> ML </label>
+  <input type="checkbox" id="ML" [formControlName]="3" (change)="onCheckboxChange(3)">  </div>
 
+  <br/>
 
-      <br/>
-      <button type="submit"   (click)="getLog(this.logForm.value.id)" (click)="open(mymodal)">SUBMIT</button>
+  <button type="submit" (click)=" submitForm();open(mymodal)">SUBMIT</button>
+
     <br>
 
 
@@ -194,7 +204,7 @@
     <input type="datetime-local" class="email"  name="date2" formControlName="date2"  required>
 
     <br/>
-    <button type="button" (click)="formSubmit()">SUBMIT</button>
+    <button type="button" (click)="formSubmit2()">SUBMIT</button>
   <br></form>
 <div id="error"></div>
 <div id="success-msg"></div>
