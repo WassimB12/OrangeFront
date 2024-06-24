@@ -1,4 +1,18 @@
-<body><div class="contact-container" >
+
+<head>
+  <style>
+      .date-container {
+          display: flex;
+          align-items: center;
+      }
+      .date-container label {
+          margin-right: 10px;
+      }
+      .date-container input[type="date"] {
+          margin-right: 10px;
+      }
+  </style>
+</head><body><div class="contact-container" >
   <div class="left-col">
   </div>
 <div class="right-col" *ngIf="div1" >
@@ -17,10 +31,35 @@
 
     <input type="text" class="email"  name="domain" formControlName="domain"  required>
     <br/>
+    <div class="date-container">
+     <!-- app.component.html -->
+     <div>
+      <!-- Input for Start Date -->
+      <input
+    type="date"
+    id="startDate"
+    [(ngModel)]="startDate"
+    formControlName="date1"
+    (change)="onStartDateChange()"
+    max="{{ today }}"
+  />
+
+  <!-- Input for End Date -->
+  <input
+    type="date"
+    id="endDate"
+    [(ngModel)]="endDate"
+    formControlName="date2"
+
+    (change)="onEndDateChange()"
+    [disabled]="!startDate"
+    [min]="startDate"
+    [max]="today"
+  />  </div>
 
 
-    <br/>
-    <button type="button" (click)="this.loading=true;getMails(this.domainForm.value.domain, 'all', '2024-02-13T00:03', '2024-02-13T14:03');open(mymodal)">SUBMIT</button>
+  </div><br>
+    <button type="button" (click)="this.loading=true;getMails(this.domainForm.value.domain, 'all', this.domainForm.value.date1+'T00:03', this.domainForm.value.date1+'T14:03');open(mymodal)">SUBMIT</button>
   <br>
 
 
@@ -76,5 +115,8 @@
 </form>
 </div>
 </ng-template></div>
+<script>
 
+
+</script>
 </body>

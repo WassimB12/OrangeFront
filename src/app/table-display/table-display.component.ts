@@ -57,6 +57,12 @@ if(mail1=="form2^^")
         })}
 
 
+        couloirCheckConstraints(couloir: string): boolean {
+          return (/GP|ML|VIP/.test(couloir));
+        }
+
+
+
 
 
 

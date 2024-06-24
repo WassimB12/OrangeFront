@@ -103,7 +103,8 @@
           <td>      <button type="submit"   (click)="getLog(m.id,1,55)" (click)="open(mymodal)">open</button>
           </td>
           <td>
-            <button (click)="getLog(m.couloirID, 2, m.ipadress); open(mymodal)">open</button>
+            <div *ngIf="couloirCheckConstraints(m.couloir)">
+              <button (click)="getLog(m.couloirID, 2, m.ipadress); open(mymodal)">open</button></div>
           </td>
 
         </tr>

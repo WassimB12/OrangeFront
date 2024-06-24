@@ -15,8 +15,12 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   host: { ngSkipHydration: 'true' },
 })
 export class ChartsWorkComponent implements OnInit {
+  startDate: string | null = null;
+  endDate: string | null = null;
+  isEndDateDisabled: boolean = true;
   value = signal(50);
   loading: boolean=true;
+  today!:string;
 
 mode:any="determinate";
   listMails: any;
@@ -81,11 +85,17 @@ mode:any="determinate";
   ) {
     this.domainForm = this.formBuilder.group({
       domain: ['delice.orders@aziza.tn'],
+      date1:['2024-02-13'],
+      date2:['2024-02-15']
+
     });
   }
 
   ngOnInit(): void {
     this.getMails('delice.orders@aziza.tn', 'all', '2024-02-13T00:03', '2024-02-13T20:03');
+    const todayDate = new Date();
+    this.today = todayDate.toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+
   }
 
   getMails(mail1: any, mail2: any, d1: any, d2: any) {
@@ -157,5 +167,17 @@ mode:any="determinate";
 
   cancel() {
     this.form = false;
+  }
+  onStartDateChange() {
+    if (this.endDate && this.startDate && this.endDate < this.startDate) {
+      this.endDate = null; // Clear end date if it is before start date
+    }
+  }
+
+  onEndDateChange() {
+    if (this.startDate && this.endDate && this.endDate < this.startDate) {
+      alert('End date cannot be before start date.');
+      this.endDate = null; // Clear end date if it is before start date
+    }
   }
 }
