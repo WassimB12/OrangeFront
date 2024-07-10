@@ -46,9 +46,9 @@ if(mail1=="form2^^")
 
     getReceiverMails(mail2:any,d1:any,d2:any){
       this.mailService.getReceiverMails(mail2,d1,d2).subscribe(res => {this.listMails = res; this.loading = false;})}
-    public getLog(id:any,op:any,ip:any){
+    public getLog(id:any,op:any,ip:any,date:any){
       /*if this.logForm.value.id == null -> error message (id required)*/
-      this.mailService.getLog(id,op,ip).subscribe(res => {this.logString = res; this.loading = false;})}
+      this.mailService.getLog(id,op,ip,date).subscribe(res => {this.logString = res; this.loading = false;})}
       public getCouloir(m:any,ip:any,id:any,date:any){
         /*if this.logForm.value.id == null -> error message (id required)*/
         this.mailService.getCouloir(ip,id,date).subscribe(couloirString =>{m.couloir=couloirString;
@@ -58,7 +58,7 @@ if(mail1=="form2^^")
 
 
         couloirCheckConstraints(couloir: string): boolean {
-          return (/GP|ML|VIP/.test(couloir));
+          return (/GP|ML|FES|VIP/.test(couloir));
         }
 
 
@@ -92,7 +92,8 @@ toggle(){this.checkButton=false;}
         cancel(){
           this.form = false;
         }
-
-
+         copyTenChar(inputString: string): string {
+          return inputString.substring(0, 10);
+      }
 
 }

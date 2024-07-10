@@ -8,6 +8,7 @@ import { Email } from '../Entities/email';
   providedIn: 'root'
 })
 export class EmailService {
+
   readonly API_URL = 'http://localhost:8089';
 
   constructor(private httpClient: HttpClient) { }
@@ -19,8 +20,8 @@ export class EmailService {
     return  this.httpClient.get(`${this.API_URL}/receiver/${mail2}/${d1}/${d2}`)
   }
 
-  getLog(id: any,op:any,ip:any) {
-    return this.httpClient.get(`${this.API_URL}/log/${id}/${op}/${ip}`, { responseType: 'text' }).pipe(
+  getLog(id: any,op:any,ip:any,date:any) {
+    return this.httpClient.get(`${this.API_URL}/log/${id}/${op}/${ip}/${date}`, { responseType: 'text' }).pipe(
         catchError(error => {
             console.error('Error:', error);
             throw error;

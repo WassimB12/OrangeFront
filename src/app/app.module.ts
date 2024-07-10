@@ -14,6 +14,7 @@ import { ChartsWorkComponent } from './chartsWork/charts-work.component';
 import { ChartModule } from 'primeng/chart';
 import { HttpInterceptorService } from './Services/spinner-interceptor.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoggingInterceptor } from './Services/logging-interceptor.service';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   providers: [
     provideClientHydration(),provideHttpClient(withFetch()), provideAnimationsAsync(), {
       provide: HTTP_INTERCEPTORS,
-      useClass: HttpInterceptorService,
+      useClass: LoggingInterceptor,
       multi: true
     }
   ],

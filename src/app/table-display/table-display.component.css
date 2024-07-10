@@ -10,6 +10,8 @@ body {
   line-height: 1.42em;
   color:#A7A1AE;
   background-color:#030e2b;
+  height: 100%;
+
 }
 button {
   text-transform: uppercase;
@@ -55,6 +57,7 @@ h1 {
   text-align: center;
   color: #4DC3FA;
 }
+p {color:#898888;}
 
 h2 {
   font-size:1em;

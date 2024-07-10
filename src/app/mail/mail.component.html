@@ -72,12 +72,12 @@
   </div>
   <div class="right-col" *ngIf="div1">
     <div class="theme-switch-wrapper">
-    <label class="theme-switch" for="checkbox">
-        <input type="checkbox" id="checkbox" />
-        <div class="slider round"></div>
-  </label>
-  <div class="description">Dark Mode</div>
-</div>
+      <label class="theme-switch" for="checkbox">
+          <input type="checkbox" id="checkbox"   (change)="onCheckboxToggle($event)"/>
+          <div class="slider round"></div>
+    </label>
+    <div class="description">Return</div>
+  </div>
 
     <h1> Sender Rapport </h1>
 <p>Retrieves logs of emails sent by a specific sender to either a particular receiver or multiple receivers within a specified time range. </p>
@@ -92,7 +92,7 @@
       <input type="text" class="email"  name="mail2" formControlName="mail2">
       <br/>
       <label for="name">First date</label>
-      <input type="datetime-local" class="email" id="date" name="date" formControlName="date"  required >
+      <input type="datetime-local" class="email" id="date1" name="date1" formControlName="date1"  required >
 <br>
       <label for="name">Second date</label>
       <input type="datetime-local"   name="date2" formControlName="date2"  required>
@@ -112,10 +112,10 @@
   <div class="right-col" *ngIf="div2">
     <div class="theme-switch-wrapper">
     <label class="theme-switch" for="checkbox">
-        <input type="checkbox" id="checkbox" />
+        <input type="checkbox" id="checkbox"   (change)="onCheckboxToggle($event)"/>
         <div class="slider round"></div>
   </label>
-  <div class="description">Dark Mode</div>
+  <div class="description">Return</div>
 </div>
 
     <h1> Log Details </h1>
@@ -124,6 +124,17 @@
   <label for="name">Log ID</label>
   <input type="text" class="email" name="id" formControlName="id" required>
   <br/>
+  <label for="date1">Date </label>
+
+  <!-- Input for Start Date -->
+  <input
+    type="date"
+    id="date1"
+    name="date1"
+    formControlName="date1"
+
+    max="{{ today }}" /><br>
+
   <div formArrayName="options">
 
   <label for="FES"> FES </label>
@@ -179,11 +190,11 @@
 
 <div class="right-col" *ngIf="div3">
   <div class="theme-switch-wrapper">
-  <label class="theme-switch" for="checkbox">
-      <input type="checkbox" id="checkbox" />
-      <div class="slider round"></div>
-</label>
-<div class="description">Dark Mode</div>
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox"   (change)="onCheckboxToggle($event)"/>
+        <div class="slider round"></div>
+  </label>
+  <div class="description">Return</div>
 </div>
 
   <h1> Receiver Rapport </h1>
@@ -196,7 +207,7 @@
     <input type="text" class="email"  name="mail2" formControlName="mail2">
     <br/>
     <label for="name">First date</label>
-    <input type="datetime-local"    name="date" formControlName="date"  required>
+    <input type="datetime-local"    name="date1" formControlName="date1"  required>
 
    <!-- <input type="text" class="email"  name="date" formControlName="date" >-->
     <label for="name">Second date</label>

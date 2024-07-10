@@ -17,11 +17,11 @@
   </div>
 <div class="right-col" *ngIf="div1" >
   <div class="theme-switch-wrapper">
-  <label class="theme-switch" for="checkbox">
-      <input type="checkbox" id="checkbox" />
-      <div class="slider round"></div>
-</label>
-<div class="description">Dark Mode</div>
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox"   (change)="onCheckboxToggle($event)"/>
+        <div class="slider round"></div>
+  </label>
+  <div class="description">Return</div>
 </div>
 
   <h1> Domain rapport </h1>
@@ -32,34 +32,32 @@
     <input type="text" class="email"  name="domain" formControlName="domain"  required>
     <br/>
     <div class="date-container">
-     <!-- app.component.html -->
-     <div>
+      <label for="startDate">Start date </label>
+
       <!-- Input for Start Date -->
       <input
-    type="date"
-    id="startDate"
-    [(ngModel)]="startDate"
-    formControlName="date1"
-    (change)="onStartDateChange()"
-    max="{{ today }}"
-  />
+        type="date"
+        id="startDate"
+        name="startDate"
+        formControlName="date1"
+        (change)="onStartDateChange()"
+        max="{{ today }}" />
+      <label for="endtDate">      End date </label>
 
-  <!-- Input for End Date -->
-  <input
-    type="date"
-    id="endDate"
-    [(ngModel)]="endDate"
-    formControlName="date2"
-
-    (change)="onEndDateChange()"
-    [disabled]="!startDate"
-    [min]="startDate"
-    [max]="today"
-  />  </div>
-
-
-  </div><br>
-    <button type="button" (click)="this.loading=true;getMails(this.domainForm.value.domain, 'all', this.domainForm.value.date1+'T00:03', this.domainForm.value.date1+'T14:03');open(mymodal)">SUBMIT</button>
+      <!-- Input for End Date -->
+      <input
+        type="date"
+        id="endDate"
+        name="endDate"
+        formControlName="date2"
+        (change)="onEndDateChange()"
+        [disabled]="!startDate"
+        [min]="startDate"
+        [max]="today"
+      />
+    </div>
+    <br>
+    <button type="button" (click)="this.loading=true;getMails(this.domainForm.value.domain, 'all', this.domainForm.value.date1+'T00:00', this.domainForm.value.date2+'T23:59');open(mymodal)">SUBMIT</button>
   <br>
 
 

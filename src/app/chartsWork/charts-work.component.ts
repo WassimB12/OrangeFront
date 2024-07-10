@@ -2,10 +2,11 @@ import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EmailService } from '../Services/email-service.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError, tap } from 'rxjs/operators';
+import { forkJoin, of } from 'rxjs';
+import { request } from 'http';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: false,
@@ -19,10 +20,9 @@ export class ChartsWorkComponent implements OnInit {
   endDate: string | null = null;
   isEndDateDisabled: boolean = true;
   value = signal(50);
-  loading: boolean=true;
-  today!:string;
-
-mode:any="determinate";
+  loading: boolean = true;
+  today!: string;
+  mode: any = "determinate";
   listMails: any;
   resultCounts: number[] = [300, 50, 100, 60, 40, 45];
   div1: Boolean = true;
@@ -30,6 +30,7 @@ mode:any="determinate";
   closeResult!: string;
   form: boolean = false;
   div2: Boolean = false;
+
   data: {
     labels: string[],
     datasets: {
@@ -45,22 +46,16 @@ mode:any="determinate";
       "Virus",
       "Mail content is not acceptable",
       "Wrong mail address",
-      "Recipient inbox is full"
+      "Recipient inbox is full","discard from MX"
     ],
     datasets: [
       {
         data: [],  // Start with an empty array
         backgroundColor: [
-          "#1376bd",
-          "#034a36",
-          "#34ad69",
-          '#fc0330', 'purple', '#FFA726', '#b3adb0'
+          "#1376bd", "#034a36", "#34ad69", '#fc0330', 'purple', '#FFA726', '#b3adb0','#080142'
         ],
         hoverBackgroundColor: [
-          "#1d0266",
-          "#81C784",
-          "#FFB74D",
-          'pink', '#c7a40a', '#fa8e1b', '#b3adb0'
+          "#165687", "#81C784", "#FFB74D", 'pink', '#c7a40a', '#fa8e1b', '#333333','#080142'
         ]
       }
     ]
@@ -81,21 +76,32 @@ mode:any="determinate";
     private route: ActivatedRoute,
     private mailService: EmailService,
     private modalService: NgbModal,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private router:Router
   ) {
+    const defaultDate = '2024-02-13';
     this.domainForm = this.formBuilder.group({
-      domain: ['delice.orders@aziza.tn'],
-      date1:['2024-02-13'],
-      date2:['2024-02-15']
-
+      domain: ['delice.orders@aziza.tn', Validators.required],
+      date1: [defaultDate, Validators.required],
+      date2: ['2024-02-18', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.getMails('delice.orders@aziza.tn', 'all', '2024-02-13T00:03', '2024-02-13T20:03');
+    console.log('Form values on init:', this.domainForm.value);
     const todayDate = new Date();
-    this.today = todayDate.toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+    this.today = todayDate.toISOString().split('T')[0];
+  }
+  getDatesArray(startDate: Date, endDate: Date): string[] {
+    let dateArray = [];
+    let currentDate = new Date(startDate);
 
+    while (currentDate <= endDate) {
+      dateArray.push(currentDate.toISOString().split('T')[0]);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dateArray;
   }
 
   getMails(mail1: any, mail2: any, d1: any, d2: any) {
@@ -124,7 +130,7 @@ mode:any="determinate";
       "Rejected(mail considered as a virus)",
       "Rejected(mail content is not acceptable)",
       "Rejected(Wrong mail adress)",
-      "recipient inbox is full",
+      "recipient inbox is full","discard from MX"
     ];
 
     // Count occurrences of each result
@@ -134,18 +140,26 @@ mode:any="determinate";
   }
 
   updateChartData() {
-    // Update the data array within the dataset
     this.data.datasets[0].data = [...this.resultCounts];
-    // Detect changes to ensure the chart updates
     this.cdRef.detectChanges();
   }
 
-  delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+
+
+  onStartDateChange() {
+    if (this.endDate && this.startDate && new Date(this.endDate) < new Date(this.startDate)) {
+      this.endDate = this.startDate;
+    }
   }
 
-  async open(content: any) {
-    await this.delay(100);
+  onEndDateChange() {
+    if (this.startDate && this.endDate && new Date(this.endDate) < new Date(this.startDate)) {
+      alert('End date cannot be before start date.');
+      this.endDate = this.startDate;
+    }
+  }
+
+  open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -168,16 +182,21 @@ mode:any="determinate";
   cancel() {
     this.form = false;
   }
-  onStartDateChange() {
-    if (this.endDate && this.startDate && this.endDate < this.startDate) {
-      this.endDate = null; // Clear end date if it is before start date
-    }
+  delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  onEndDateChange() {
-    if (this.startDate && this.endDate && this.endDate < this.startDate) {
-      alert('End date cannot be before start date.');
-      this.endDate = null; // Clear end date if it is before start date
+  async goToHome() {
+    await this.delay(600);
+    this.router.navigate(['/home']);
+  }
+
+
+
+  onCheckboxToggle(event: Event) {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      this.goToHome();
     }
   }
 }
