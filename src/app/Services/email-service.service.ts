@@ -16,8 +16,8 @@ export class EmailService {
   getAllMails(mail1 : any,mail2:any,d1:any,d2:any) {
     return  this.httpClient.get(`${this.API_URL}/send/${mail1}/${mail2}/${d1}/${d2}`)
   }
-  getReceiverMails(mail2:any,d1:any,d2:any) {
-    return  this.httpClient.get(`${this.API_URL}/receiver/${mail2}/${d1}/${d2}`)
+  getReceiverMails(mail2:any,mail1:any,d1:any,d2:any) {
+    return  this.httpClient.get(`${this.API_URL}/receiver/${mail2}/${mail1}/${d1}/${d2}`)
   }
 
   getLog(id: any,op:any,ip:any,date:any) {

@@ -15,13 +15,14 @@ import { ChartModule } from 'primeng/chart';
 import { HttpInterceptorService } from './Services/spinner-interceptor.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoggingInterceptor } from './Services/logging-interceptor.service';
+import { UserComponent } from './user/user.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    TableDisplayComponent,MailComponent,ChartsWorkComponent
+    TableDisplayComponent,MailComponent,ChartsWorkComponent, UserComponent
   ],
   imports: [
     BrowserModule,

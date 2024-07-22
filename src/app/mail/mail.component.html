@@ -200,7 +200,11 @@
   <h1> Receiver Rapport </h1>
 <p>Retrieves logs of emails sent to a specific receiver from either a particular sender or multiple senders within a specified time range. </p>
   <form [formGroup]="emailForm2" >
+    <label for="name">Sender Email</label>
 
+
+    <input type="text" class="email"  name="mail1" formControlName="mail1">
+    <br/>
     <label for="name">Receiver Email</label>
 
 

@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { TableDisplayComponent } from './table-display/table-display.component';
 import { ChartsWorkComponent } from './chartsWork/charts-work.component';
+import { UserComponent } from './user/user.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,9 @@ export const routes: Routes = [
 },{
   path: 'charts',
   component: ChartsWorkComponent
+},{
+  path: 'login',
+  component: UserComponent
 },
 
   {

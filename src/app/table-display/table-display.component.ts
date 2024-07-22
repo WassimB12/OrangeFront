@@ -31,8 +31,10 @@ couloirString:any;
        const mail2 = params['mail2'] ? params['mail2'].toString() : '';
        const date1 = params['date1'] ? params['date1'].toString() : '';
        const date2 = params['date2'] ? params['date2'].toString() : '';
-if(mail1=="form2^^")
-  {this.getReceiverMails(mail2, date1, date2);}
+       const recVal = params['recVal'] ? params['recVal'].toString() : '';
+
+if(recVal=="yes")
+  {this.getReceiverMails(mail2,mail1, date1, date2);}
  else{this.getMails(mail1, mail2, date1, date2);}
     });
  }
@@ -44,8 +46,8 @@ if(mail1=="form2^^")
   getMails(mail1 : any,mail2:any,d1:any,d2:any){
     this.mailService.getAllMails(mail1,mail2,d1,d2).subscribe(res => {this.listMails = res; this.loading = false;})}
 
-    getReceiverMails(mail2:any,d1:any,d2:any){
-      this.mailService.getReceiverMails(mail2,d1,d2).subscribe(res => {this.listMails = res; this.loading = false;})}
+    getReceiverMails(mail2:any,mail1:any,d1:any,d2:any){
+      this.mailService.getReceiverMails(mail2,mail1,d1,d2).subscribe(res => {this.listMails = res; this.loading = false;})}
     public getLog(id:any,op:any,ip:any,date:any){
       /*if this.logForm.value.id == null -> error message (id required)*/
       this.mailService.getLog(id,op,ip,date).subscribe(res => {this.logString = res; this.loading = false;})}

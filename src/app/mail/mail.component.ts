@@ -44,7 +44,7 @@ export class MailComponent implements OnInit {
     });
 
     this.emailForm2 = this.formBuilder.group({
-      mail1: ['form2^^'],
+      mail1: ['all'],
       mail2: [''],
       date1: ['2024-03-11T04:30'],
       date2: ['2024-03-11T19:30']
@@ -135,7 +135,8 @@ export class MailComponent implements OnInit {
         mail1: formValue.mail1,
         mail2: formValue.mail2,
         date1: formValue.date1,
-        date2: formValue.date2
+        date2: formValue.date2,
+        recVal:"yes"
       }
     });
   }
