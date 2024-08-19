@@ -1,0 +1,179 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Sidebar 01</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../../assets/css/style.css">
+
+  </head>
+  <body>
+<div class="wrapper d-flex align-items-stretch">
+<nav id="sidebar"  >
+    <div class="p-4 pt-5">
+
+
+      <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(assets/images/5.png);"></a>
+      <ul class="list-unstyled components mb-5">
+        <li class="active">
+          <a href="#"data-toggle="collapse" aria-expanded="false" style="color: inherit; text-decoration: none;" onmouseover="this.style.color='orange'"
+          onmouseout="this.style.color='inherit'" class="dropdown-toggle"   [routerLink]="['/home']">Home</a>
+
+        </li>
+        <li>
+          <a class="menu__item" href="#" [routerLink]="['/mail',1]">
+            Sender Rapport</a>
+        </li>
+        <li>
+          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Log Details</a>
+        </li>
+        <li>
+          <a href="#">Receiver Rapport</a>
+        </li>
+        <li>
+          <a href="#">Chart Rapport</a>
+        </li>
+        <li>
+          <a href="#">Chart Rapport</a>
+        </li>
+        <li>
+          <a href="#">Contact</a>
+
+      </ul><br>
+      <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+<br><br>
+
+
+       <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+
+
+
+    </div>
+  </nav>
+  <table class="container" style=" margin-right: 0;
+  margin-left: 0;  max-width: none;
+">
+      <thead>
+        <tr style="color:rgb(51, 50, 50)">
+          <th>ID</th>
+              <th>Domain name</th>
+                <th>Responsable's mail</th>
+
+                <th>update</th>
+                <th>delete</th>
+                <th>Add</th>
+        </tr>
+      </thead>
+      <tbody> <tr *ngFor='let m of listDomain'>
+        <td>{{m.id}}</td>
+          <td>{{m.name}}</td>
+          <td>{{m.respEmail}}</td>
+
+          <ng-template #updateModal let-modal> <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Update</h4>
+
+        </div>
+            <div class="modal-dialog" style="max-width: 60vw;">
+              <div class="modal-content">
+
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="name">Name:</label>
+                      <input type="text" class="form-control" id="name" name="name" [(ngModel)]="m.name">
+                    </div>
+                    <div class="form-group">
+                      <label for="respEmail">Resp Email:</label>
+                      <input type="text" class="form-control" id="respEmail" name="respEmail" [(ngModel)]="m.respEmail">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click'); cancel()">Close</button>
+                  <button type="button" class="btn btn-primary" (click)="updateExistingDomain(m);modal.close('Save click');">Save</button>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+
+
+
+          <td>
+            <button (click)="open(updateModal)"
+                    >
+              update
+            </button>
+          </td>
+          <td>
+              <button  (click)="deleteDomainById(this.m.id);">delete</button>
+          </td>
+        <td>  <button (click)="open(mymodal)"> Add  </button>
+        </td>
+        </tr>
+
+
+      </tbody>
+    </table>
+
+
+    <ng-template #mymodal let-modal> <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add new domain</h4>
+
+  </div>
+      <div class="modal-dialog" style="max-width: 60vw;">
+        <div class="modal-content">
+
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" [(ngModel)]="this.domain.name"  [ngModelOptions]="{standalone : true}" >
+              </div>
+              <div class="form-group">
+                <label for="respEmail">Resp Email:</label>
+                <input type="text" class="form-control" id="respEmail" name="respEmail" [(ngModel)]="this.domain.respEmail"  [ngModelOptions]="{standalone : true}" >
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click'); cancel()">Close</button>
+            <button type="button" class="btn btn-primary" (click)="saveDomain(this.domain);modal.close('Save click')">Save</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/popper.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <div *ngIf="loading" class="loading-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+
+</body>
+</html>
+
+
+

@@ -41,10 +41,10 @@
 			<div class="content content--fixed">
 				<header class="codrops-header">
 					<div class="codrops-links">
-						<a class="codrops-icon codrops-icon--prev" href="https://tympanus.net/Development/AnimatedImagePieces/" title="Previous Demo"><svg class="icon icon--arrow"><use xlink:href="#icon-arrow"></use></svg></a>
-						<a class="codrops-icon codrops-icon--drop" href="https://tympanus.net/codrops/?p=31887" title="Back to the article"><svg class="icon icon--drop"><use xlink:href="#icon-drop"></use></svg></a>
+						<a class="codrops-icon codrops-icon--prev" (click)="logOut()" title="Previous Demo"><svg class="icon icon--arrow"><use xlink:href="#icon-arrow"></use></svg></a>
+						<a class="codrops-icon codrops-icon--drop"  title="Back to the article"><svg class="icon icon--drop"><use xlink:href="#icon-drop"></use></svg></a>
 					</div>
-					<h1 class="codrops-header__title">Deconnexion</h1>
+					<a class="codrops-header__title" (click)="logOut()">Deconnexion</a>
 				</header>
 				<a class="github" href="https://github.com/codrops/MenuHoverEffects/" title="Find this project on GitHub">
           <svg class="icon icon--github"><use xlink:href="#icon-github"></use></svg></a>
@@ -62,8 +62,11 @@
 
 			</div>
 			<section class="content">
+       <!-- <div class="alert alert-primary" role="alert">
+          This is a primary alert—check it out!{{user?.firstName}}
+        </div>-->
 				<nav class="menu menu--inola">
-					<a class="menu__item" href="#" [routerLink]="['/mail',1]">
+					<a class="menu__item" href="#" [routerLink]="['/mail',1]" id="home">
 						<span class="menu__item-name">Sender rapport</span>
 						<span class="menu__item-label">Review sender's mails status</span>
 					</a>
@@ -77,11 +80,11 @@
 					</a>
 					<a class="menu__item" href="#" [routerLink]="['/charts']">
 						<span class="menu__item-name">Chart rapport</span>
-						<span class="menu__item-label">Review doamin's monthly rapport </span>
+						<span class="menu__item-label">Review domain diagram rapport </span>
 					</a>
-					<a class="menu__item" href="#">
-						<span class="menu__item-name">Calendar</span>
-						<span class="menu__item-label">Important Dates</span>
+					<a class="menu__item" href="#" [routerLink]="['/domain']">
+						<span class="menu__item-name">Mail flow inspector</span>
+						<span class="menu__item-label">list of emails to be daily reviewed automatically </span>
 					</a>
 				</nav>
 

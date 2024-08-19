@@ -29,7 +29,7 @@
   <form [formGroup]="domainForm" ><br>
     <label for="name">Domain name</label>
 
-    <input type="text" class="email"  name="domain" formControlName="domain"  required>
+    <input type="text" class="email" id="email"  name="domain" formControlName="domain"  required>
     <br/>
     <div class="date-container">
       <label for="startDate">Start date </label>
@@ -57,7 +57,12 @@
       />
     </div>
     <br>
-    <button type="button" (click)="this.loading=true;getMails(this.domainForm.value.domain, 'all', this.domainForm.value.date1+'T00:00', this.domainForm.value.date2+'T23:59');open(mymodal)">SUBMIT</button>
+    <button type="button" id="submit" class="button"
+    (click)="this.loading=true;
+    getMails(this.domainForm.value.domain, 'all', this.domainForm.value.date1+'T00:00',
+    this.domainForm.value.date2+'T23:59');open(mymodal)">SUBMIT</button>
+    <textarea style="display: none;"  id="rapport">{{this.resultString}}</textarea>
+
   <br>
 
 
@@ -67,10 +72,7 @@
 <div id="success-msg"></div>
 </div>
 <ng-template #mymodal let-modal style="width:fit-content">
-  <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Domain rapport</h4>
 
-  </div>
 
 
   <div  >
@@ -83,7 +85,7 @@
 <div id="GFG"  >
   <h2 style="font-family: 'Jost' ,'sans-serif';
   font-weight: 540;
-  letter-spacing: 0.07rem;"> Mail transmission result for the past 30 days : </h2>
+  letter-spacing: 0.07rem;"> Mail transmission result for : </h2>
 
 	<h1 style="color:green;font-family: 'Jost';">{{this.domainForm.value.domain}}</h1>
   <div *ngIf="loading" style="margin-left: 150px; margin-top: 70px; ">
@@ -96,6 +98,7 @@
 				[options]="chartOptions"
 				[style]="{'width': '90%'}">
 		</p-chart>
+    <p id="chart" ></p>
 
 	</div>
 

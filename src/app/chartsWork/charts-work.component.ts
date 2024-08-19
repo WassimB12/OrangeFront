@@ -3,10 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { EmailService } from '../Services/email-service.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, tap } from 'rxjs/operators';
-import { forkJoin, of } from 'rxjs';
+import { catchError, take, tap } from 'rxjs/operators';
+import { firstValueFrom, forkJoin, of, Subscription } from 'rxjs';
 import { request } from 'http';
 import { Router } from '@angular/router';
+import * as Chart from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import {  registerables } from 'chart.js';
+import { DomainService } from '../Services/domain.service';
+
 
 @Component({
   standalone: false,
@@ -16,6 +21,9 @@ import { Router } from '@angular/router';
   host: { ngSkipHydration: 'true' },
 })
 export class ChartsWorkComponent implements OnInit {
+  resultString!:any;
+  private screenTaskSubscription!: Subscription;
+
   startDate: string | null = null;
   endDate: string | null = null;
   isEndDateDisabled: boolean = true;
@@ -24,6 +32,7 @@ export class ChartsWorkComponent implements OnInit {
   today!: string;
   mode: any = "determinate";
   listMails: any;
+  screenResult:any;
   resultCounts: number[] = [300, 50, 100, 60, 40, 45];
   div1: Boolean = true;
   domainForm!: FormGroup;
@@ -46,11 +55,12 @@ export class ChartsWorkComponent implements OnInit {
       "Virus",
       "Mail content is not acceptable",
       "Wrong mail address",
-      "Recipient inbox is full","discard from MX"
+      "Recipient inbox is full",
+      "Discard from MX"
     ],
     datasets: [
       {
-        data: [],  // Start with an empty array
+        data: [10, 20, 30, 5, 15, 25, 10, 5],  // Example data
         backgroundColor: [
           "#1376bd", "#034a36", "#34ad69", '#fc0330', 'purple', '#FFA726', '#b3adb0','#080142'
         ],
@@ -61,24 +71,38 @@ export class ChartsWorkComponent implements OnInit {
     ]
   };
 
-  chartOptions = {
+  chartOptions: any = {
     plugins: {
       legend: {
         labels: {
           color: '#495057'
         }
+      },
+      datalabels: {
+        color: '#fff',
+        formatter: (value: number, ctx: any) => {
+          let datasets = ctx.chart.data.datasets;
+          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+            let sum = datasets[0].data.reduce((a: number, b: number) => a + b, 0);
+            let percentage = Math.round((value / sum) * 100) + '%';
+            return percentage;
+          } else {
+            return value;
+          }
+        }
       }
     }
   };
-
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private mailService: EmailService,
     private modalService: NgbModal,
     private cdRef: ChangeDetectorRef,
-    private router:Router
+    private router:Router,
+    private domainService:DomainService
   ) {
+
     const defaultDate = '2024-02-13';
     this.domainForm = this.formBuilder.group({
       domain: ['delice.orders@aziza.tn', Validators.required],
@@ -139,10 +163,51 @@ export class ChartsWorkComponent implements OnInit {
     });
   }
 
-  updateChartData() {
+
+
+  async updateChartData() {
     this.data.datasets[0].data = [...this.resultCounts];
     this.cdRef.detectChanges();
+let totalSum = this.data.datasets[0].data.reduce((a, b) => a + b, 0);
+this.resultString = `Mail transmission report of (${this.domainForm.value.domain} ):\n Total: ${totalSum} \n`;
+
+this.data.labels.forEach((label, index) => {
+    if (this.data.datasets[0].data[index] > 0) {
+        let percentage = (this.data.datasets[0].data[index] / totalSum) * 100;
+        this.resultString += `${label}: ${this.data.datasets[0].data[index]} (${percentage.toFixed(1)}%)`;
+        if (index < this.data.labels.length - 1) {
+           this.resultString += '\n ';
+        }
+    }
+});
+console.log(this.resultString);
+
+let deliveredIndex = this.data.labels.indexOf('Delivered');
+let deliveredCount = this.data.datasets[0].data[deliveredIndex];
+let deliveredPercentage = (deliveredCount / totalSum) * 100;
+
+if (deliveredPercentage < 90 ) {
+  this.screenTask(this.domainForm.value.domain, "becheikh.wassim@esprit.tn");
+}}
+// Assuming resultString contains the value you want to set in the <p> element
+
+
+
+async screenTask(domain: any, mail: any) {
+  try {
+    const response = await this.domainService.SendScreenMail(domain, mail);
+    console.log(response); // Handle the response from the backend
+  } catch (error) {
+    console.error(error); // Handle any errors
   }
+}
+
+// Usage example:
+
+
+
+
+
 
 
 
@@ -199,4 +264,5 @@ export class ChartsWorkComponent implements OnInit {
       this.goToHome();
     }
   }
+
 }

@@ -71,13 +71,13 @@ h6 span{
   color: #ff5722;
   background-color: #101010;
   font-family: 'unicons';
-  content: '\eb4f';
+  content: '\	➠	';
   z-index: 20;
   top: -10px;
   left: -10px;
   line-height: 36px;
   text-align: center;
-  font-size: 24px;
+  font-size: 16px;
   transition: all 0.5s ease;
 }
 .checkbox:checked + label:before {

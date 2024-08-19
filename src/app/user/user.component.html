@@ -17,17 +17,18 @@
                                     <div class="center-wrap">
                                         <div class="section text-center">
                                             <h4 class="mb-4 pb-3">Log In</h4>
-                                            <form action="/login" method="post">
-                                                <div class="form-group">
-                                                    <input type="email" name="username" class="form-style" placeholder="Your Email" id="logemail" autocomplete="on">
-                                                    <i class="input-icon uil uil-at"></i>
-                                                </div>
-                                                <div class="form-group mt-2">
-                                                    <input type="password" name="password" class="form-style" placeholder="Your Password" id="logpass" autocomplete="on">
-                                                    <i class="input-icon uil uil-lock-alt"></i>
-                                                </div>
-                                                <button type="submit" class="btn mt-4">Submit</button>
-                                            </form>
+                                            <form  (submit)="onSubmit($event, user2)" >
+                                              <div class="form-group">
+                                                <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" [(ngModel)]="user2.email" autocomplete="on">
+                                                <i class="input-icon uil uil-at"></i>
+                                              </div>
+                                              <div class="form-group mt-2">
+                                                <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass1" [(ngModel)]="user2.password" autocomplete="on">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                              </div>
+                                                <button type="submit" href="#" class="btn mt-4" (click)="login(user2)">submit </button> </form>
+                                              <p *ngIf="loginError" class="text-danger mt-2">{{ loginError }}</p>
+
                                             <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
                                         </div>
                                     </div>
@@ -36,19 +37,30 @@
                                     <div class="center-wrap">
                                         <div class="section text-center">
                                             <h4 class="mb-4 pb-3">Sign Up</h4>
+
+
+
+
+
+
+
+
                                             <form action="/register" method="post" (ngSubmit)="register()">
                                                 <div class="form-group">
                                                     <input type="text" name="firstName" class="form-style"  [(ngModel)]="user.firstName" placeholder="Your First Name" id="logname" autocomplete="on">
                                                     <i class="input-icon uil uil-user"></i>
                                                 </div>
                                                 <div class="form-group mt-2">
-                                                    <input type="text" name="lastName" class="form-style" placeholder="Your Last Name" [(ngModel)]="user.lastName" id="logname" autocomplete="on">
+                                                    <input type="text" name="lastName" class="form-style" placeholder="Your Last Name" [(ngModel)]="user.lastName" id="logname2" autocomplete="on">
                                                     <i class="input-icon uil uil-user"></i>
                                                 </div>
                                                 <div class="form-group mt-2">
-                                                    <input type="email" name="email" class="form-style" placeholder="Your Email" id="logemail" [(ngModel)]="user.email" autocomplete="off">
+                                                    <input type="email" name="email" class="form-style" placeholder="Your Email" id="logemail1"  (mouseleave)="checkEmail()" [(ngModel)]="user.email" autocomplete="off">
                                                     <i class="input-icon uil uil-at"></i>
                                                 </div>
+                                                <div *ngIf="emailExists" class="error-message">
+                                                  This email is already in use.
+                                              </div>
                                                 <div class="form-group mt-2">
                                                     <input type="text" name="employeId" class="form-style" placeholder="Your Employee ID" id="logemployeeid"  [(ngModel)]="user.employeId" autocomplete="off">
                                                     <i class="input-icon uil uil-id-card"></i>
@@ -59,9 +71,16 @@
                                                     <i class="input-icon uil uil-lock-alt"></i>
                                                 </div>
 
-                                                <button type="submit" class="btn mt-4" (click)="register()">Submit</button>
+                                                <button type="submit" class="btn mt-4" [disabled]="emailExists" (click)="register()">Submit</button>
                                             </form>
-                                        </div>
+
+
+
+
+
+
+
+                                          </div>
                                     </div>
                                 </div>
                             </div>

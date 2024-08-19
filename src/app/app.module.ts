@@ -16,13 +16,14 @@ import { HttpInterceptorService } from './Services/spinner-interceptor.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoggingInterceptor } from './Services/logging-interceptor.service';
 import { UserComponent } from './user/user.component';
+import { DomainComponent } from './domain/domain.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    TableDisplayComponent,MailComponent,ChartsWorkComponent, UserComponent
+    TableDisplayComponent,MailComponent,ChartsWorkComponent, UserComponent, DomainComponent
   ],
   imports: [
     BrowserModule,

@@ -8,31 +8,45 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { TableDisplayComponent } from './table-display/table-display.component';
 import { ChartsWorkComponent } from './chartsWork/charts-work.component';
 import { UserComponent } from './user/user.component';
+import { DomainComponent } from './domain/domain.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   {
-      path: 'mail/:id',
-      component: MailComponent
+    path: 'mail/:id',
+    component: MailComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'home',
-    component: HomeComponent
-},{
-  path: 'display',
-  component: TableDisplayComponent
-},{
-  path: 'charts',
-  component: ChartsWorkComponent
-},{
-  path: 'login',
-  component: UserComponent
-},
-
+    component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
   {
-      path: '**',
-      redirectTo: 'home'
+    path: 'display',
+    component: TableDisplayComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'charts',
+    component: ChartsWorkComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'login',
+    component: UserComponent
+  },
+  {
+    path: 'domain',
+    component: DomainComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
   }
 ];
+
 @NgModule({
   imports: [CommonModule,FormsModule,ReactiveFormsModule,
     RouterModule.forRoot(routes)],
