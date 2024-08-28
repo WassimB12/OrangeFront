@@ -10,8 +10,15 @@ import { ChartsWorkComponent } from './chartsWork/charts-work.component';
 import { UserComponent } from './user/user.component';
 import { DomainComponent } from './domain/domain.component';
 import { AuthGuard } from './auth.guard';
+import { AdminComponent } from './admin/admin.component';
+
 
 export const routes: Routes = [
+  {
+    path: 'admin',
+    component: AdminComponent,
+   // canActivate: [AuthGuard]
+  },
   {
     path: 'mail/:id',
     component: MailComponent,
@@ -30,7 +37,7 @@ export const routes: Routes = [
   {
     path: 'charts',
     component: ChartsWorkComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -43,8 +50,9 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'login'
-  }
+    redirectTo: 'admin'
+  },
+
 ];
 
 @NgModule({

@@ -1,0 +1,68 @@
+/* Modal Header */
+.modal-header {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-title {
+  font-size: 21px;
+  font-weight: bold;
+  margin-left: 50px;
+}
+
+.close {
+  font-size: 5px;
+  color: #000;
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 20px;
+}
+
+.modal-body .row {
+  margin-bottom: 15px;
+}
+
+.modal-body label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-left: 15px;
+}
+
+.modal-body input[type="text"],
+.modal-body input[type="number"] {
+  width: auto;
+  min-width: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 20px;
+}
+
+/* Modal Footer */
+.modal-footer {
+  background-color: #f5f5f5;
+  border-top: 1px solid #ddd;
+  padding: 15px;
+  text-align: right;
+}
+
+.modal-footer .btn {
+  margin-left: 10px;
+}
+
+.btn-info {
+  background-color: #5bc0de;
+  border-color: #46b8da;
+  color: #fff;
+}
+
+.btn-success {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  color: #fff;
+}
+
+

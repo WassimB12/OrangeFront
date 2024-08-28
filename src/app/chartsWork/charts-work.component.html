@@ -76,7 +76,7 @@
 
 
   <div  >
-    <form>
+    <form  (click)="sendMailIfNeeded()">
       <div class="modal-body" style=" display: flex;
       flex-direction: row;margin-top: 5px;padding-bottom: 5vh;padding-top: 4vh; text-align: center;">
 
@@ -113,6 +113,7 @@
     <button type="button" class="btn btn-outline-secondary"
         (click)="modal.close('Save click')" (click)="cancel()">Close</button>
 </div>
+
 </form>
 </div>
 </ng-template></div>

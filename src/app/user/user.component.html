@@ -9,7 +9,8 @@
                 <div class="col-12 text-center align-self-center py-5">
                     <div class="section pb-5 pt-5 pt-sm-2 text-center">
                         <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
-                        <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+                        <input class="checkbox" type="checkbox" id="reg-log"
+                        name="reg-log" #checkbox/>
                         <label for="reg-log"></label>
                         <div class="card-3d-wrap mx-auto">
                             <div class="card-3d-wrapper">
@@ -19,11 +20,13 @@
                                             <h4 class="mb-4 pb-3">Log In</h4>
                                             <form  (submit)="onSubmit($event, user2)" >
                                               <div class="form-group">
-                                                <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" [(ngModel)]="user2.email" autocomplete="on">
+                                                <input type="email" name="logemail" class="form-style"
+                                                placeholder="Your Email" id="logemail" [(ngModel)]="user2.email" #emailLogin autocomplete="off">
                                                 <i class="input-icon uil uil-at"></i>
                                               </div>
                                               <div class="form-group mt-2">
-                                                <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass1" [(ngModel)]="user2.password" autocomplete="on">
+                                                <input type="password" name="logpass" class="form-style" placeholder="Your Password"
+                                                id="logpass1" [(ngModel)]="user2.password" autocomplete="off">
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                               </div>
                                                 <button type="submit" href="#" class="btn mt-4" (click)="login(user2)">submit </button> </form>
@@ -36,46 +39,64 @@
                                 <div class="card-back">
                                     <div class="center-wrap">
                                         <div class="section text-center">
-                                            <h4 class="mb-4 pb-3">Sign Up</h4>
+                                          <h4 class="mb-4 pb-3">Sign Up</h4>
 
-
-
-
-
-
-
-
-                                            <form action="/register" method="post" (ngSubmit)="register()">
-                                                <div class="form-group">
-                                                    <input type="text" name="firstName" class="form-style"  [(ngModel)]="user.firstName" placeholder="Your First Name" id="logname" autocomplete="on">
-                                                    <i class="input-icon uil uil-user"></i>
-                                                </div>
-                                                <div class="form-group mt-2">
-                                                    <input type="text" name="lastName" class="form-style" placeholder="Your Last Name" [(ngModel)]="user.lastName" id="logname2" autocomplete="on">
-                                                    <i class="input-icon uil uil-user"></i>
-                                                </div>
-                                                <div class="form-group mt-2">
-                                                    <input type="email" name="email" class="form-style" placeholder="Your Email" id="logemail1"  (mouseleave)="checkEmail()" [(ngModel)]="user.email" autocomplete="off">
-                                                    <i class="input-icon uil uil-at"></i>
-                                                </div>
-                                                <div *ngIf="emailExists" class="error-message">
-                                                  This email is already in use.
+                                          <form action="/register" method="post" (ngSubmit)="register()" #signUpForm="ngForm">
+                                              <div class="form-group">
+                                                  <input type="text" name="firstName" class="form-style" [(ngModel)]="user.firstName" placeholder="Your First Name" id="logname" autocomplete="on" required>
+                                                  <i class="input-icon uil uil-user"></i>
+                                                  <div *ngIf="signUpForm.submitted && !user.firstName" class="text-danger mt-2">
+                                                      First Name is required.
+                                                  </div>
                                               </div>
-                                                <div class="form-group mt-2">
-                                                    <input type="text" name="employeId" class="form-style" placeholder="Your Employee ID" id="logemployeeid"  [(ngModel)]="user.employeId" autocomplete="off">
-                                                    <i class="input-icon uil uil-id-card"></i>
+
+                                              <div class="form-group mt-2">
+                                                  <input type="text" name="lastName" class="form-style" [(ngModel)]="user.lastName" placeholder="Your Last Name" id="logname2" autocomplete="on" required>
+                                                  <i class="input-icon uil uil-user"></i>
+                                                  <div *ngIf="signUpForm.submitted && !user.lastName" class="text-danger mt-2">
+                                                      Last Name is required.
+                                                  </div>
+                                              </div>
+
+                                              <div class="form-group mt-2">
+                                                  <input type="email" name="email" class="form-style" [(ngModel)]="user.email" placeholder="Your Email" id="logemail1"
+                                                   (mouseleave)="checkEmail()" autocomplete="off" required email>
+                                                  <i class="input-icon uil uil-at"></i>
+                                                  <div *ngIf="emailExists" class="alert alert-warning">
+                                                      This email is already in use.
+                                                  </div>
+                                                  <div *ngIf="signUpForm.submitted && !user.email" class="text-danger mt-2">
+                                                      Email is required.
+                                                  </div>
+                                                  <div *ngIf="signUpForm.submitted && signUpForm.controls['email']?.errors?.['email']" class="text-danger mt-2">
+                                                      Invalid email format.
+                                                  </div>
+                                              </div>
+
+                                              <div class="form-group mt-2">
+             <input type="text" name="employeId" class="form-style" [(ngModel)]="user.employeId" placeholder="Your Employee ID" id="logemployeeid" (mouseleave)="checkEmpID()" autocomplete="off" required>
+                                                  <i class="input-icon uil uil-id-card"></i>
+                                                  <div *ngIf="empExists" class="alert alert-warning">
+                                                    This employeId is already in use.
                                                 </div>
+                                                  <div *ngIf="signUpForm.submitted && !user.employeId" class="text-danger mt-2">
+                                                      Employee ID is required.
+                                                  </div>
+                                              </div>
 
-                                                <div class="form-group mt-2">
-                                                    <input type="password" name="password" class="form-style" placeholder="Your Password" [(ngModel)]="user.password" id="logpass" autocomplete="off">
-                                                    <i class="input-icon uil uil-lock-alt"></i>
-                                                </div>
+                                              <div class="form-group mt-2">
+                                                  <input type="password" name="password" class="form-style" [(ngModel)]="user.password" placeholder="Your Password" id="logpass" autocomplete="off" required minlength="8">
+                                                  <i class="input-icon uil uil-lock-alt"></i>
+                                                  <div *ngIf="signUpForm.submitted && !user.password" class="text-danger mt-2">
+                                                      Password is required.
+                                                  </div>
+                                                  <div *ngIf="signUpForm.submitted && signUpForm.controls['password']?.errors?.['minlength']" class="text-danger mt-2">
+                                                      Password must be at least 8 characters long.
+                                                  </div>
+                                              </div>
 
-                                                <button type="submit" class="btn mt-4" [disabled]="emailExists" (click)="register()">Submit</button>
-                                            </form>
-
-
-
+                                              <button type="submit" class="btn mt-4" >Submit</button>
+                                          </form>
 
 
 

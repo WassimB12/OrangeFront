@@ -34,8 +34,9 @@ export class DomainService {
     return this.http.get<DomainList[]>(`${this.baseUrl}/get-all`);
   }
 
-SendScreenMail(domain: any, mail: any) {
-  return this.http.get(`${this.ApiUrl}/${domain}/${mail}/2`);
-}
+  sendMail(mail: string, receiver: string, op: number): Observable<any> {
+    const url = `${this.ApiUrl}/${mail}/${receiver}/${op}`;
+    return this.http.get(url, { responseType: 'text' });
+  }
 
 }

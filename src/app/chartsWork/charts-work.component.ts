@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EmailService } from '../Services/email-service.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -20,11 +20,14 @@ import { DomainService } from '../Services/domain.service';
   styleUrls: ['./charts-work.component.css'],
   host: { ngSkipHydration: 'true' },
 })
-export class ChartsWorkComponent implements OnInit {
+export class ChartsWorkComponent implements OnInit,OnChanges {
+  @Input() mailSent: boolean = false;
+
   resultString!:any;
   private screenTaskSubscription!: Subscription;
 
   startDate: string | null = null;
+  val:number=0;
   endDate: string | null = null;
   isEndDateDisabled: boolean = true;
   value = signal(50);
@@ -100,8 +103,10 @@ export class ChartsWorkComponent implements OnInit {
     private modalService: NgbModal,
     private cdRef: ChangeDetectorRef,
     private router:Router,
-    private domainService:DomainService
+    private domainService:DomainService,
+
   ) {
+
 
     const defaultDate = '2024-02-13';
     this.domainForm = this.formBuilder.group({
@@ -115,6 +120,11 @@ export class ChartsWorkComponent implements OnInit {
     console.log('Form values on init:', this.domainForm.value);
     const todayDate = new Date();
     this.today = todayDate.toISOString().split('T')[0];
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['mailSent'] && changes['mailSent'].currentValue) {
+      this.sendMail(this.domainForm.value.domain, "becheikh.wassim@esprit.tn", 2);
+    }
   }
   getDatesArray(startDate: Date, endDate: Date): string[] {
     let dateArray = [];
@@ -186,21 +196,29 @@ let deliveredIndex = this.data.labels.indexOf('Delivered');
 let deliveredCount = this.data.datasets[0].data[deliveredIndex];
 let deliveredPercentage = (deliveredCount / totalSum) * 100;
 
-if (deliveredPercentage < 90 ) {
-  this.screenTask(this.domainForm.value.domain, "becheikh.wassim@esprit.tn");
+ if (!this.mailSent && deliveredPercentage < 90) {
+  // becheikh.wassim@esprit.tn is orange responsable of monitoring clients mail service
+  this.mailSent = true; // Set the flag to true after sending the mail
 }}
 // Assuming resultString contains the value you want to set in the <p> element
 
-
-
-async screenTask(domain: any, mail: any) {
-  try {
-    const response = await this.domainService.SendScreenMail(domain, mail);
-    console.log(response); // Handle the response from the backend
-  } catch (error) {
-    console.error(error); // Handle any errors
+sendMail(mail: string, receiver: string, op: number): void {
+  this.domainService.sendMail(mail, receiver, op).subscribe(
+    response => {
+      console.log('Mail delivered successfully:', response);
+    },
+    error => {
+      console.error('Error delivering mail:', error);
+    }
+  );
+}
+sendMailIfNeeded() {
+  if (this.mailSent) {
+      this.sendMail(this.domainForm.value.domain, "becheikh.wassim@esprit.tn", 2);
   }
 }
+
+
 
 // Usage example:
 
@@ -230,17 +248,24 @@ async screenTask(domain: any, mail: any) {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+
   }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
+      this.sendMailIfNeeded();
+
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      this.sendMailIfNeeded();
+
       return 'by clicking on a backdrop';
-    } else {
+    } else {      this.sendMailIfNeeded();
+
       return `with: ${reason}`;
     }
   }
+
 
   closeForm() { }
 

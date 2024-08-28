@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../Entities/user';
 import { catchError, Observable, throwError } from 'rxjs';
@@ -45,4 +45,37 @@ export class UserService {
   checkEmailExists(email: string): Observable<boolean> {
     return this.httpClient.get<boolean>(`${this.API_URL}/check-email`, { params: { email } });
   }
+
+  checkEmpIDExists(emID: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(`${this.API_URL}/check-emp`, { params: { emID } });
+  }
+  getAllUsers(): Observable<User[]> {
+    return this.httpClient.get<User[]>(`${this.API_URL}/users`);
+  }
+
+  getUserById(id: number): Observable<User> {
+    return this.httpClient.get<User>(`${this.API_URL}/${id}`);
+  }
+
+  createUser(user: User): Observable<User> {
+    return this.httpClient.post<User>(this.API_URL, user);
+  }
+
+  updateUser(id: number, user: User): Observable<User> {
+    return this.httpClient.put<User>(`${this.API_URL}/update/${id}`, user);
+  }
+
+  deleteUser(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.API_URL}/delete/${id}`);
+  }
+
+
+  getUserByEmail(email: any): Observable<any> {
+    return this.httpClient.get<any>(`${this.API_URL}/user/${email}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+
 }
