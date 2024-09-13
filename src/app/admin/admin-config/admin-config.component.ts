@@ -45,6 +45,7 @@ export class AdminConfigComponent {
         console.error('Error updating parameter:', error);
       }
     );
+    this.startScheduling(this.parameter.time);
   }
 
   // Called when any input changes
@@ -72,5 +73,12 @@ export class AdminConfigComponent {
     // Simple email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  }
+  startScheduling(time:any) {
+    this.parameterService.startScheduling(time).subscribe(response => {
+      console.log('Scheduling started:', response);
+    }, error => {
+      console.error('Error starting scheduling:', error);
+    });
   }
 }

@@ -21,4 +21,16 @@ export class ParameterService {
   updateParameter(id: number, parameter: Parameter): Observable<Parameter> {
     return this.http.put<Parameter>(`${this.baseUrl}/update/${id}`, parameter);
   }
+
+  private apiUrl = 'http://localhost:8089'; // Base URL of your backend service
+
+
+  startScheduling(time: string): Observable<any> {
+    // Split the time string into hours and minutes
+    const [hours, minutes] = time.split(':');
+
+    // Construct the endpoint URL with parameters
+    const url = `${this.apiUrl}/start-scheduling?hours=${hours}&minutes=${minutes}`;
+    return this.http.get(url);
+  }
 }

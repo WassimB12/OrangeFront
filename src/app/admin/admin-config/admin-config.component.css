@@ -1,0 +1,7 @@
+/* Add this to your CSS file or in a <style> block */
+input[type="email"] {
+  width: auto;
+  min-width: 200px; /* Adjust this value as needed */
+  display: inline-block;
+  box-sizing: content-box;
+}
