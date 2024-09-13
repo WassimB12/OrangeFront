@@ -11,13 +11,14 @@ import { UserComponent } from './user/user.component';
 import { DomainComponent } from './domain/domain.component';
 import { AuthGuard } from './auth.guard';
 import { AdminComponent } from './admin/admin.component';
+import { AdminConfigComponent } from './admin/admin-config/admin-config.component';
 
 
 export const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-   // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'mail/:id',
@@ -37,7 +38,7 @@ export const routes: Routes = [
   {
     path: 'charts',
     component: ChartsWorkComponent,
-    //canActivate: [AuthGuard]
+   // canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -47,10 +48,15 @@ export const routes: Routes = [
     path: 'domain',
     component: DomainComponent,
     canActivate: [AuthGuard]
+  },{
+    path:'adminConfig',
+  component:AdminConfigComponent,
+  canActivate: [AuthGuard]
+
   },
   {
     path: '**',
-    redirectTo: 'admin'
+    redirectTo: 'home'
   },
 
 ];

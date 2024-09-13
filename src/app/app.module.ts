@@ -20,6 +20,7 @@ import { DomainComponent } from './domain/domain.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminComponent } from './admin/admin.component';
+import { AdminConfigComponent } from './admin/admin-config/admin-config.component';
 
 
 
@@ -27,7 +28,7 @@ import { AdminComponent } from './admin/admin.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    TableDisplayComponent,MailComponent,ChartsWorkComponent, UserComponent, DomainComponent, AdminComponent
+    TableDisplayComponent,MailComponent,ChartsWorkComponent, UserComponent, DomainComponent, AdminComponent, AdminConfigComponent
   ],
   imports: [  RouterModule,
 

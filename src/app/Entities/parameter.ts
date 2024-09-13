@@ -1,9 +1,15 @@
-export class Paramater
+export class Parameter
 {
-private id:any;
-private email:any;
-private pc:any;
-private time:any;
+ id:any;
+ email:any;
+ pc:any;
+ time:any;
 
+constructor(id: any, email: any, pc: any, time: any) {
+  this.id = id;
+  this.email = email;
+  this.pc = pc;
+  this.time = time;
+}
 
 }

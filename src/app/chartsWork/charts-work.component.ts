@@ -1,3 +1,4 @@
+import { ParameterService } from './../Services/parameter.service';
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EmailService } from '../Services/email-service.service';
@@ -11,6 +12,7 @@ import * as Chart from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {  registerables } from 'chart.js';
 import { DomainService } from '../Services/domain.service';
+import { Parameter } from '../Entities/parameter';
 
 
 @Component({
@@ -42,7 +44,7 @@ export class ChartsWorkComponent implements OnInit,OnChanges {
   closeResult!: string;
   form: boolean = false;
   div2: Boolean = false;
-
+parameter!:Parameter;
   data: {
     labels: string[],
     datasets: {
@@ -104,6 +106,7 @@ export class ChartsWorkComponent implements OnInit,OnChanges {
     private cdRef: ChangeDetectorRef,
     private router:Router,
     private domainService:DomainService,
+    private parameterService:ParameterService
 
   ) {
 
@@ -117,13 +120,16 @@ export class ChartsWorkComponent implements OnInit,OnChanges {
   }
 
   ngOnInit(): void {
+    this.getParameter();
+
+    console.log('Actual minimum pourcentage: ',this.parameter.pc)
     console.log('Form values on init:', this.domainForm.value);
     const todayDate = new Date();
     this.today = todayDate.toISOString().split('T')[0];
   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes['mailSent'] && changes['mailSent'].currentValue) {
-      this.sendMail(this.domainForm.value.domain, "becheikh.wassim@esprit.tn", 2);
+      this.sendMail(this.domainForm.value.domain, this.parameter.email, 2);
     }
   }
   getDatesArray(startDate: Date, endDate: Date): string[] {
@@ -149,6 +155,7 @@ export class ChartsWorkComponent implements OnInit,OnChanges {
       // After getting the list of mails, count occurrences
       this.resultCounts = this.countEmailResults(this.listMails);
       console.log("Result counts:", this.resultCounts);
+      console.log('Actual minimum pourcentage: ',this.parameter.pc)
 
       // Update the chart data
       this.updateChartData();
@@ -196,7 +203,7 @@ let deliveredIndex = this.data.labels.indexOf('Delivered');
 let deliveredCount = this.data.datasets[0].data[deliveredIndex];
 let deliveredPercentage = (deliveredCount / totalSum) * 100;
 
- if (!this.mailSent && deliveredPercentage < 90) {
+ if (!this.mailSent && deliveredPercentage <this.parameter.pc) {
   // becheikh.wassim@esprit.tn is orange responsable of monitoring clients mail service
   this.mailSent = true; // Set the flag to true after sending the mail
 }}
@@ -225,7 +232,17 @@ sendMailIfNeeded() {
 
 
 
-
+getParameter(): void {
+  this.parameterService.getParameter(1).subscribe(
+    (data) => {
+      this.parameter = data;
+      console.log('Fetched parameter:', this.parameter);
+    },
+    (error) => {
+      console.error('Error fetching parameter:', error);
+    }
+  );
+}
 
 
 

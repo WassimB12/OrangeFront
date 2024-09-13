@@ -15,7 +15,8 @@ import {  Router } from '@angular/router';
 export class AdminComponent {
   @ViewChild('inputRef') inputElement!: ElementRef;
   inputValue: string = ''; // Declare the inputValue property
-
+  selectedTime: string = '12:00'; // Default value
+email:any;
   form : boolean = false;
   closeResult! : string;
 
@@ -93,6 +94,13 @@ open(content: any) {
       this.router.navigate([currentUrl]);
     });
   }
-
-
+   getPercentageValue(): number {
+    const input = document.getElementById('percentage') as HTMLInputElement;
+    return parseInt(input.value, 10);
+}
+isValidEmail(email: string): boolean {
+  // Simple email validation regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
   }
