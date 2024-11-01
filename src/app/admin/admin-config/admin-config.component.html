@@ -47,20 +47,14 @@
           OR
         </a>
         <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
-        </a>
+Orange admin page         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
 
 
 
-          <li>
-            <a href="./user.html">
-              <i class="now-ui-icons users_single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
+
           <li >
             <a [routerLink]="['/admin']">
               <i class="now-ui-icons design_bullet-list-67"></i>
@@ -177,14 +171,7 @@
                   </div>
                 </div>
 
-                <div class="typography-line">
-                  <span><p class="text-muted">Daily Time to check mails rapport</p></span>
 
-                  <div>
-                    <label for="time">Select time:</label>
-                    <input type="time" id="time" name="time" [(ngModel)]="this.parameter.time" (ngModelChange)="onInputChange()">
-                  </div>
-                </div>
 
                 <!-- Buttons that appear when any input changes -->
                 <div *ngIf="showButtons">
